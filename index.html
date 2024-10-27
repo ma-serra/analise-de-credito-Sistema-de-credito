@@ -1,0 +1,495 @@
+<html><head><base href="https://credito.banco.gov.br/credit-analysis">
+<meta charset="UTF-8">
+<title>Análise de Crédito - Sistema de Crédito</title>
+<style>
+:root {
+  --primary: #1351B4;
+  --secondary: #2670E8;
+  --white: #FFFFFF;
+  --gray-100: #F8F9FA;
+  --gray-200: #E9ECEF;
+  --gray-300: #DEE2E6;
+  --gray-500: #6C757D;
+  --gray-800: #343A40;
+  --success: #168821;
+  --warning: #FFC107;
+  --danger: #DC3545;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Rawline', 'Raleway', sans-serif;
+}
+
+body {
+  background: var(--gray-100);
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+.header {
+  background: var(--primary);
+  padding: 1rem 2rem;
+  color: var(--white);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  height: 100%;
+}
+
+.sidebar {
+  background: var(--white);
+  padding: 2rem 0;
+  border-right: 1px solid var(--gray-200);
+}
+
+.nav-item {
+  padding: 0.75rem 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: var(--gray-800);
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.nav-item:hover,
+.nav-item.active {
+  background: var(--gray-100);
+  color: var(--primary);
+}
+
+.nav-item i {
+  width: 20px;
+}
+
+.main-content {
+  padding: 2rem;
+}
+
+.page-title {
+  margin-bottom: 2rem;
+  color: var(--gray-800);
+}
+
+.analysis-form {
+  background: var(--white);
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.form-section {
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.form-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.section-title {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  color: var(--gray-800);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--gray-800);
+  font-weight: 500;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--gray-300);
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.currency-input {
+  position: relative;
+}
+
+.currency-input::before {
+  content: "R$";
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--gray-500);
+}
+
+.currency-input input {
+  padding-left: 2.5rem;
+}
+
+.btn-group {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 2rem;
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: var(--white);
+}
+
+.btn-primary:hover {
+  background: var(--secondary);
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--gray-300);
+  color: var(--gray-800);
+}
+
+.btn-outline:hover {
+  background: var(--gray-100);
+}
+
+.progress-steps {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.progress-steps::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gray-300);
+  z-index: 1;
+}
+
+.step {
+  position: relative;
+  z-index: 2;
+  background: var(--white);
+  padding: 0 1rem;
+  text-align: center;
+}
+
+.step-number {
+  width: 32px;
+  height: 32px;
+  background: var(--gray-300);
+  color: var(--white);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 0.5rem;
+}
+
+.step.active .step-number {
+  background: var(--primary);
+}
+
+.step-label {
+  font-size: 0.875rem;
+  color: var(--gray-500);
+}
+
+.step.active .step-label {
+  color: var(--primary);
+  font-weight: 500;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  margin-left: 0.5rem;
+}
+
+.tooltip i {
+  color: var(--gray-500);
+  font-size: 0.875rem;
+}
+
+.tooltip-text {
+  visibility: hidden;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--gray-800);
+  color: var(--white);
+  text-align: center;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  width: 200px;
+}
+
+.tooltip:hover .tooltip-text {
+  visibility: visible;
+}
+
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <header class="header">
+    <img src="https://www.gov.br/++theme++padrao_govbr/img/govbr-colorido-b.png" alt="Logo GOV.BR" height="40">
+    <div class="user-info">
+      <span>Olá, João Silva</span>
+      <div class="user-avatar">JS</div>
+    </div>
+  </header>
+
+  <div class="container">
+    <aside class="sidebar">
+      <nav>
+        <a href="/dashboard" class="nav-item">
+          <i class="fas fa-chart-line"></i>
+          Dashboard
+        </a>
+        <a href="/solicitations" class="nav-item">
+          <i class="fas fa-file-alt"></i>
+          Solicitações
+        </a>
+        <a href="/credit-analysis" class="nav-item active">
+          <i class="fas fa-search-dollar"></i>
+          Análise de Crédito
+        </a>
+        <a href="/documents" class="nav-item">
+          <i class="fas fa-folder"></i>
+          Documentos
+        </a>
+        <a href="/settings" class="nav-item">
+          <i class="fas fa-cog"></i>
+          Configurações
+        </a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <h1 class="page-title">Nova Solicitação de Crédito</h1>
+
+      <div class="progress-steps">
+        <div class="step active">
+          <div class="step-number">1</div>
+          <div class="step-label">Dados Pessoais</div>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <div class="step-label">Dados Financeiros</div>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <div class="step-label">Documentação</div>
+        </div>
+        <div class="step">
+          <div class="step-number">4</div>
+          <div class="step-label">Revisão</div>
+        </div>
+      </div>
+
+      <form class="analysis-form" id="creditAnalysisForm">
+        <div class="form-section">
+          <h2 class="section-title">Informações do Crédito</h2>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">
+                Valor Solicitado
+                <div class="tooltip">
+                  <i class="fas fa-info-circle"></i>
+                  <span class="tooltip-text">Informe o valor que deseja solicitar</span>
+                </div>
+              </label>
+              <div class="currency-input">
+                <input type="text" class="form-control" id="creditAmount" placeholder="0,00">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Prazo (em meses)</label>
+              <select class="form-control" id="creditTerm">
+                <option value="">Selecione o prazo</option>
+                <option value="12">12 meses</option>
+                <option value="24">24 meses</option>
+                <option value="36">36 meses</option>
+                <option value="48">48 meses</option>
+                <option value="60">60 meses</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Finalidade do Crédito</label>
+              <select class="form-control" id="creditPurpose">
+                <option value="">Selecione a finalidade</option>
+                <option value="investment">Capital de Investimento</option>
+                <option value="working_capital">Capital de Giro</option>
+                <option value="expansion">Expansão do Negócio</option>
+                <option value="equipment">Compra de Equipamentos</option>
+                <option value="other">Outros</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Garantias Oferecidas</label>
+              <select class="form-control" id="guarantees">
+                <option value="">Selecione o tipo de garantia</option>
+                <option value="real_estate">Imóvel</option>
+                <option value="vehicle">Veículo</option>
+                <option value="equipment">Equipamentos</option>
+                <option value="none">Sem garantia</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h2 class="section-title">Dados do Negócio</h2>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">CNPJ</label>
+              <input type="text" class="form-control" id="cnpj" placeholder="00.000.000/0000-00">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Razão Social</label>
+              <input type="text" class="form-control" id="companyName">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Setor de Atuação</label>
+              <select class="form-control" id="sector">
+                <option value="">Selecione o setor</option>
+                <option value="commerce">Comércio</option>
+                <option value="service">Serviços</option>
+                <option value="industry">Indústria</option>
+                <option value="agribusiness">Agronegócio</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Tempo de Atividade</label>
+              <select class="form-control" id="businessTime">
+                <option value="">Selecione o tempo</option>
+                <option value="0-2">Até 2 anos</option>
+                <option value="2-5">2 a 5 anos</option>
+                <option value="5-10">5 a 10 anos</option>
+                <option value="10+">Mais de 10 anos</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="btn-group">
+          <button type="button" class="btn btn-outline" id="saveAsDraft">Salvar Rascunho</button>
+          <button type="button" class="btn btn-primary" id="nextStep">Próximo</button>
+        </div>
+      </form>
+    </main>
+  </div>
+
+  <script>
+    // Formatação de moeda
+    const creditAmount = document.getElementById('creditAmount');
+    creditAmount.addEventListener('input', function(e) {
+      let value = e.target.value.replace(/\D/g, '');
+      value = (Number(value) / 100).toFixed(2);
+      value = value.replace('.', ',');
+      value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+      e.target.value = value;
+    });
+
+    // Formatação de CNPJ
+    const cnpj = document.getElementById('cnpj');
+    cnpj.addEventListener('input', function(e) {
+      let value = e.target.value.replace(/\D/g, '');
+      value = value.replace(/^(\d{2})(\d)/, '$1.$2');
+      value = value.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+      value = value.replace(/\.(\d{3})(\d)/, '.$1/$2');
+      value = value.replace(/(\d{4})(\d)/, '$1-$2');
+      e.target.value = value;
+    });
+
+    // Navegação entre etapas
+    document.getElementById('nextStep').addEventListener('click', function() {
+      // Validação básica
+      const requiredFields = ['creditAmount', 'creditTerm', 'creditPurpose', 'cnpj', 'companyName', 'sector'];
+      let isValid = true;
+
+      requiredFields.forEach(field => {
+        const element = document.getElementById(field);
+        if (!element.value) {
+          element.style.borderColor = 'var(--danger)';
+          isValid = false;
+        } else {
+          element.style.borderColor = 'var(--gray-300)';
+        }
+      });
+
+      if (isValid) {
+        // Aqui você implementaria a navegação para a próxima etapa
+        window.location.href = '/credit-analysis/step2';
+      }
+    });
+
+    // Salvar rascunho
+    document.getElementById('saveAsDraft').addEventListener('click', function() {
+      // Aqui você implementaria a lógica para salvar o rascunho
+      alert('Rascunho salvo com sucesso!');
+    });
+  </script>
+</body></html>
